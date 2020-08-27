@@ -16,23 +16,17 @@ module.exports = (opts = {}) => {
   return (req, res, next) => {
     const jar = new cookies(req, res, { keys: secretKey });
     let _session = qs.parse(jar.get(cookie, options));
+    const set = (mutation) => {
+      mutation();
+      jar.set(cookie, qs.stringify(_session), options);
+      return req.session;
+    }
 
     req.session = {};
     req.session.get = (key) => key ? _session[key] : _session;
-    req.session.set = (key, value) => {
-      _session[key] = value;
-      jar.set(cookie, qs.stringify(_session), options);
-      return req.session;
-    }
-    req.session.delete = (key) => {
-      delete _session[key];
-      jar.set(cookie, qs.stringify(_session), options);
-      return req.session;
-    }
-    req.session.reset = () => {
-      _session = {};
-      jar.set(cookie, qs.stringify(_session), options);
-    }
+    req.session.set = (key, value) => set(() => _session[key] = value);
+    req.session.delete = (key) => set(() => delete _session[key]);
+    req.session.reset = () => set(() => _session = {});
     req.session.flash = () => {
       const flash = req.session.get('flash');
       req.session.set('flash', '');
