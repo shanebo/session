@@ -2,16 +2,16 @@ const qs = require('qs');
 const cookies = require('cookies');
 const keygrip = require('keygrip');
 
-module.exports = (opts = {}) => {
-  const {
-    cookie = '___dylan',
-    secret = 'PutAS3CretHereANDmAK3itSUP3rG00d'
-  } = opts;
+module.exports = (opts = {
+    cookie: '___dylan',
+    secret: 'PutAS3CretHereANDmAK3itSUP3rG00d',
+    options: {
+      signed: true,
+      overwrite: true
+    }
+  }) => {
+  const { cookie, secret, options } = opts;
   const secretKey = keygrip([secret]);
-  const options = {
-    signed: true,
-    overwrite: true
-  };
 
   return (req, res, next) => {
     const jar = new cookies(req, res, { keys: secretKey });
