@@ -1,16 +1,19 @@
 const qs = require('qs');
 const cookies = require('cookies');
 const keygrip = require('keygrip');
+const { merge } = require('merge-anything');
 
-module.exports = (opts = {
-    cookie: '___dylan',
-    secret: 'PutAS3CretHereANDmAK3itSUP3rG00d',
-    options: {
-      signed: true,
-      overwrite: true
-    }
-  }) => {
-  const { cookie, secret, options } = opts;
+const defaults = {
+  cookie: '___dylan',
+  secret: 'PutAS3CretHereANDmAK3itSUP3rG00d',
+  options: {
+    signed: true,
+    overwrite: true
+  }
+};
+
+module.exports = (opts = {}) => {
+  const { cookie, secret, options } = merge(defaults, opts);
   const secretKey = keygrip([secret]);
 
   return (req, res, next) => {
