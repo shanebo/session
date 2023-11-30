@@ -1,6 +1,6 @@
 {
   "name": "@dylan/session",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Middleware for Dylan which provides cookie based sessions.",
   "license": "MIT",
   "keywords": [
