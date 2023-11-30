@@ -7,7 +7,10 @@
     "middleware",
     "dylan"
   ],
-  "repository": "shanebo/session",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shanebo/session.git"
+  },
   "author": "Shane Thacker <shane@steadymade.com>",
   "main": "./index",
   "dependencies": {
